@@ -5,13 +5,12 @@ import React from "react";
 
 	  const sortedItems = React.useMemo(() => {
 	    let sortableItems = [...items];
-	  	
 	    if (sortConfig !== null) {
 	      sortableItems.sort((a, b) => {
+	  			console.log(b);
 	        if (a[sortConfig.key] < b[sortConfig.key]) {
 	          return sortConfig.direction === 'ascending' ? -1 : 1;
-	        }
-	        if (a[sortConfig.key] > b[sortConfig.key]) {
+	        }else if (a[sortConfig.key] > b[sortConfig.key]) {
 	          return sortConfig.direction === 'ascending' ? 1 : -1;
 	        }
 	        return 0;
@@ -39,6 +38,7 @@ import React from "react";
 function EmployeeList(props) {
 
 	  const { items, requestSort, sortConfig } = useSortableData(props.results);
+	  
 	  const getClassNamesFor = (name) => {
 	    if (!sortConfig) {
 	      return;
@@ -50,16 +50,18 @@ function EmployeeList(props) {
   return (
   	<div>
 	
-	<table className="table">
+	<table className="table table-dark">
 	  <thead>
 	    <tr>
 
-	      <th scope="col">Image</th>
+	      <th scope="col">
+	      Image
+	      </th>
 	      <th scope="col">
 	          <button
 	              type="button"
 	              	onClick={() => requestSort('name')}
-	              className={getClassNamesFor('name')}
+	              className="{getClassNamesFor('name')} btn btn-primary"
 	            >
 	              Name
 	            </button>
@@ -68,7 +70,7 @@ function EmployeeList(props) {
 	      <button
 	              type="button"
 	                onClick={() => requestSort('phone')}
-	              className={getClassNamesFor('phone')}
+	              className="{getClassNamesFor('phone')} btn btn-primary"
 	            >
 	              Phone
 	            </button>
@@ -77,7 +79,7 @@ function EmployeeList(props) {
 	      <button
 	              type="button"
 	              	onClick={() => requestSort('email')}
-	              className={getClassNamesFor('email')}
+	              className="{getClassNamesFor('email')} btn btn-primary"
 	            >
 	              Email
 	            </button>
@@ -86,7 +88,7 @@ function EmployeeList(props) {
 	      <button
 	              type="button"
 	                onClick={() => requestSort('dob')}
-	              className={getClassNamesFor('dob')}
+	              className="{getClassNamesFor('dob')} btn btn-primary"
 	            >
 	      			DOB
 	            </button>
@@ -98,12 +100,12 @@ function EmployeeList(props) {
       	     
 			{
 				  items.map(result => (
-					    	<tr key={result.name}>
-						      <td>{result.name}</td>
-						      <td>{result.name}</td>
-						      <td>{result.phone}</td>
+					    	<tr key={result.name.first}>
+						      <td><img src={result.picture.thumbnail}/></td>
+						      <td>{result.name.first}</td>
+						      <td>{result.cell}</td>
 						      <td>{result.email}</td>
-						      <td>{result.dob}</td>
+						      <td>{result.dob.date}</td>
 					    	</tr>
 							      )
 							     )
